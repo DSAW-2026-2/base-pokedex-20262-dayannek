@@ -1,0 +1,365 @@
+/* ============================================================
+   PokéLab — Research Terminal v2.6
+   Design tokens
+   ------------------------------------------------------------
+   Color:
+     --bg-void:      #05080a  fondo exterior
+     --bg-frame:     #0a1210  cuerpo de la terminal
+     --bg-panel:     #0e1a17  paneles anidados
+     --line:         #1f4a3c  bordes / divisores
+     --text-main:    #7fffb0  texto primario (verde fósforo)
+     --text-dim:     #5c8b78  texto secundario
+     --accent-amber: #ffc857  barras de amenaza / advertencias
+     --accent-red:   #ff5c5c  errores
+     --accent-cyan:  #63d9ff  IDs / acentos informativos
+   Type: monoespaciada en toda la interfaz (registro de laboratorio)
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+
+:root {
+  --bg-void: #05080a;
+  --bg-frame: #0a1210;
+  --bg-panel: #0e1a17;
+  --line: #1f4a3c;
+  --line-bright: #2d6b53;
+  --text-main: #7fffb0;
+  --text-dim: #5c8b78;
+  --accent-amber: #ffc857;
+  --accent-red: #ff5c5c;
+  --accent-cyan: #63d9ff;
+
+  font-family: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 16px;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 50% 0%, #0b1a16 0%, #05080a 60%);
+}
+
+/* ---------- Marco general de la terminal ---------- */
+
+.terminal-frame {
+  width: 100%;
+  max-width: 880px;
+  border: 1px solid var(--line-bright);
+  background: var(--bg-frame);
+  box-shadow: 0 0 0 1px #000, 0 0 40px rgba(127, 255, 176, 0.08);
+  color: var(--text-main);
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, #0f1e19 0%, var(--bg-frame) 100%);
+}
+
+.terminal-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+}
+
+.terminal-version {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.terminal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.terminal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-top: 1px solid var(--line);
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* ---------- Panel de búsqueda ---------- */
+
+.search-panel {
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-label {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line-bright);
+  background: var(--bg-void);
+  padding: 10px 12px;
+}
+
+.prompt-caret {
+  color: var(--accent-amber);
+}
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.search-input::placeholder {
+  color: var(--text-dim);
+}
+
+.analyze-button {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--text-main);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.analyze-button:hover:not(:disabled) {
+  background: var(--text-main);
+  color: var(--bg-void);
+}
+
+.analyze-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Estados: idle / loading / error ---------- */
+
+.status-panel {
+  border: 1px solid var(--line);
+  background: var(--bg-panel);
+  padding: 20px;
+  text-align: center;
+  color: var(--text-dim);
+}
+
+.status-subtext {
+  margin-top: 6px;
+  font-size: 0.8rem;
+}
+
+.loading-panel {
+  color: var(--text-main);
+}
+
+.error-panel {
+  border-color: var(--accent-red);
+  color: var(--accent-red);
+}
+
+.blink {
+  animation: blink 1.2s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to {
+    opacity: 0.3;
+  }
+}
+
+/* ---------- Ficha del espécimen ---------- */
+
+.specimen-card {
+  border: 1px solid var(--line-bright);
+  background: var(--bg-panel);
+}
+
+.specimen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.specimen-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.specimen-title h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+}
+
+.specimen-id {
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+}
+
+.type-icons {
+  font-size: 1rem;
+}
+
+.specimen-body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 18px;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.specimen-body:last-child {
+  border-bottom: none;
+}
+
+.section-label {
+  color: var(--accent-cyan);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+}
+
+.specimen-image-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.specimen-sprite {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(127, 255, 176, 0.25));
+}
+
+.evolution-chain {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: capitalize;
+}
+
+.specimen-data-col p {
+  margin: 6px 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.specimen-data-col strong {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.flavor-text {
+  margin-top: 10px !important;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ---------- Bloques de estadísticas ---------- */
+
+.stats-block,
+.analysis-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 46px 1fr 34px;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.stat-label {
+  color: var(--text-dim);
+}
+
+.stat-bar {
+  letter-spacing: -1px;
+  color: var(--text-main);
+  overflow: hidden;
+}
+
+.stat-value {
+  text-align: right;
+  color: var(--text-main);
+}
+
+.threat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.threat-bar {
+  color: var(--accent-amber);
+  font-size: 0.9rem;
+  letter-spacing: -1px;
+}
+
+.threat-percent {
+  color: var(--accent-amber);
+  font-weight: 600;
+}
+
+.threat-bst {
+  margin: 4px 0 0;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.diagnostic-label {
+  margin-top: 16px;
+}
+
+.diagnosis-text {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-main);
+  margin: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .specimen-body {
+    grid-template-columns: 1fr;
+  }
+
+  .terminal-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
